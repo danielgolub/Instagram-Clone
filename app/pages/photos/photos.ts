@@ -1,4 +1,6 @@
 import {Page, NavController} from 'ionic-angular';
+import {PhotoService} from '../../providers/photo/photo';
+import {CommentService} from '../../providers/comment/comment';
 
 /*
   Generated class for the PhotosPage page.
@@ -8,9 +10,37 @@ import {Page, NavController} from 'ionic-angular';
 */
 @Page({
   templateUrl: 'build/pages/photos/photos.html',
+  providers: [PhotoService, CommentService]
 })
 export class PhotosPage {
-  constructor(public nav: NavController) {
+  photos: any;
+
+  constructor(public nav: NavController, private photo: PhotoService, private comment: CommentService) {
     this.nav = nav;
+  }
+
+  ngOnInit() {
+    this.photo.getAll()
+        .subscribe(
+            data =>
+                this.photos = data
+        );
+  }
+
+  onAddPhoto() {
+    let newPhoto = {
+      user: 'userId',
+      description: 'description',
+      imageData: 'imageData',
+    }
+
+    this.photo.postPhoto(newPhoto)
+        .subscribe(
+            res => {
+              console.log('success', res);
+            },
+            err => {
+              console.log('error', err);
+            });
   }
 }

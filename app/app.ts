@@ -32,12 +32,12 @@ export class MyApp {
 						console.info(response)
 					},
 					(error) => {
-						this.rootPage = LoginPage;
+						this.rootPage = TabsPage;
 					}
 				);
 			}
 			else {
-				this.rootPage = LoginPage;
+				this.rootPage = TabsPage;
 			}
 		})
   }
